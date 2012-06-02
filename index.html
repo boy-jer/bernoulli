@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bernoulli by mkonutgan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Bernoulli</h1>
+        <p>A Ruby library for the binomial distribution</p>
+        <p class="view"><a href="https://github.com/mkonutgan/bernoulli">View the Project on GitHub <small>mkonutgan/bernoulli</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mkonutgan/bernoulli/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mkonutgan/bernoulli/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mkonutgan/bernoulli">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>In probability theory and statistics, the <strong>binomial distribution</strong> is the discrete probability distribution of the number of successes in a sequence of <em>n</em> independent yes/no experiments, each of which yields success with probability <em>p</em>.</p>
+
+<p>You can read more about <strong>Bernoulli trials</strong> and the <strong>binomial distribution</strong> <a href="http://en.wikipedia.org/wiki/Binomial_distribution">on Wikipedia</a>.</p>
+
+<h2>Installation</h2>
+
+<p>Use RubyGems to install <code>bernoulli</code></p>
+
+<pre><code>$ gem install bernoulli
+</code></pre>
+
+<h2>Tutorial</h2>
+
+<p>Using <code>bernoulli</code>, one can calculate the probabilities of bernoulli experiments.</p>
+
+<p>Let's start by looking at an example.</p>
+
+<p><strong>Question:</strong> What is the chance of getting between 25 and 36 sixes when one rolls a die 180 times? What is the expected value and variance of this trial?</p>
+
+<p>Let's use <code>bernoulli</code> to solve this:</p>
+
+<p>First we load up <code>irb</code> from the terminal including <code>bernoulli</code> as a library.</p>
+
+<pre><code>$ irb -r bernoulli
+</code></pre>
+
+<p>Or we could just <code>require 'bernoulli'</code> in any Ruby script.</p>
+
+<p>Then we create a new instance of class Bernoulli and calculate our desired probability and properties like so</p>
+
+<pre><code>x = Bernoulli::Distribution.new(180, 1.0/6)
+# =&gt; #&lt;Bernoulli::Distribution @n=180, @p=0.16666666666666666&gt;
+
+# The probability of getting between 25 and 36 sixes is
+x[25..36] # =&gt; 0.7665588897840108
+
+x.expected_value # =&gt; 30.0
+x.variance # =&gt; 25.0
+</code></pre>
+
+<p>We could also calculate the standard deviation, excess or skewness:</p>
+
+<pre><code>x.standard_deviation # =&gt; 5.0
+x.excess # =&gt; 0.006666666666666665
+x.skewness # =&gt; 0.13333333333333336
+</code></pre>
+
+<p><code>bernoulli</code> can also do empirical tests. Let's look at a smaller example We can simulate the tossing of 4 fair coins</p>
+
+<pre><code>y = Bernoulli::Distribution.new(4, 0.5)
+# =&gt; #&lt;Bernoulli::Distribution @n=4, @p=0.5&gt;
+</code></pre>
+
+<p>The method <code>sample</code> gives as a random array of length <code>n</code>, where each entry is <code>1</code> with a probability of <code>p</code>. The methods <code>sample_value</code> gives us the number of wins in a random expriment, we could than compare it to <code>expected_value</code>.</p>
+
+<pre><code>y.sample # =&gt; [1, 0, 1, 0]
+y.sample # =&gt; [0, 0, 1, 0]
+y.sample # =&gt; [1, 1, 1, 1]
+
+y.sample_value # =&gt; 2
+y.sample_value # =&gt; 1
+y.sample_value # =&gt; 0
+y.sample_value # =&gt; 2
+
+y.expected_value # =&gt; 2.0
+</code></pre>
+
+<p>Last, but not least, we can create a full table of all possible values and their probabilitys like so</p>
+
+<pre><code>puts y.table
+</code></pre>
+
+<p>will produce</p>
+
+<pre><code>0,0.0625
+1,0.25
+2,0.375
+3,0.25
+4,0.0625
+</code></pre>
+
+<h2>Contributing</h2>
+
+<p><code>bernoulli</code> is a really small project. After writing the same code for some project and then losing it two or three times I decided to do it one time and well, so I can just call in the code from here next time.</p>
+
+<p>Feel free to cantact me about anything I could/should add  or to contribute in any way to this simple library.</p>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'added some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/mkonutgan">mkonutgan</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
